@@ -12,6 +12,8 @@ But **why**? Because in today’s digital landscape, a strong online identity is
 
 ![Usage of Social Networks](/assets/images/social-media-growth.jpg)
 
+*Source: [Backlinko: Social Media Users](https://backlinko.com/social-media-users)*
+
 ### Where Attention Flows, Narratives Grow
 
 In the digital world, **attention** is the most valuable currency. Wherever people focus their eyes and minds, narratives sprout, evolve, and spread. Social media platforms, powered by algorithms designed to capture and hold our gaze, create fertile ground for stories - sometimes accurate, sometimes distorted. Nonetheless, immense power emerges from these technologies - the power to shape narratives, and through them, influence what people believe. In the digital age, controlling the story means controlling perception, and perception often becomes reality.
