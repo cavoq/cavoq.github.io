@@ -2,7 +2,7 @@
 layout: post
 title:  "DNS Amplification Attack"
 date:   2025-01-29 01:41:07 +0100
-categories: jekyll update
+categories: security
 ---
 
 ### What is a DNS Amplification Attack?

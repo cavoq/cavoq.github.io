@@ -2,7 +2,7 @@
 layout: post
 title:  "The Scammer Circus"
 date:   2024-11-21 01:41:07 +0100
-categories: jekyll update
+categories: satire
 ---
 
 **About Us:**

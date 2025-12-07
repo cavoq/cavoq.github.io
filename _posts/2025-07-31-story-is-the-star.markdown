@@ -2,7 +2,7 @@
 layout: post
 title:  "The Story is the Star: When Narratives Matter More Than Reality"
 date:   2025-07-31 01:41:07 +0100
-categories: jekyll update
+categories: essays
 ---
 
 ### Social Identities
