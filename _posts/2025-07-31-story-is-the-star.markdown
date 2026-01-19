@@ -10,9 +10,18 @@ categories: essays
 Politicians, companies, institutions - more and more entities are creating digital identities on the internet.
 But **why**? Because in today’s digital landscape, a strong online identity is the key to shaping and spreading their narrative. Take, for example, the rise in social media usage over the past few years. The number of users continues to trend upward, reinforcing why maintaining a strong online identity is not just beneficial, but essential.
 
-![Usage of Social Networks](/assets/images/social-media-growth.jpg)
+<figure style="margin:2em 0;">
+  <img src="/assets/images/social-media-growth.jpg"
+       alt="Growth in usage of social networks over time"
+       style="display:block; width:100%; max-width:500px;">
 
-*Source: [Backlinko: Social Media Users](https://backlinko.com/social-media-users)*
+  <figcaption style="font-size:0.9em; color:#666; margin-top:0.4em;">
+    Figure: Usage of social networks over time. Source:
+    <a href="https://backlinko.com/social-media-users" target="_blank" rel="noopener noreferrer">
+      Backlinko: Social Media Users
+    </a>
+  </figcaption>
+</figure>
 
 ### Where Attention Flows, Narratives Grow
 

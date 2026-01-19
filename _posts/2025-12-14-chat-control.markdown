@@ -2,7 +2,7 @@
 layout: post
 title: "Chat Control: The EU's Push for Mass Surveillance"
 date: 2025-12-14 01:41:07 +0100
-categories: privacy freedom democracy
+categories: privacy
 ---
 
 ### EU Proposal: Chat Control
