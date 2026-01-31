@@ -1,0 +1,165 @@
+---
+layout: post
+title: "Domain Specific Languages (DSLs) for Software Compliance Testing"
+date: 2026-01-31 01:41:07 +0100
+categories: [software-compliance-testing]
+---
+
+### What is a Domain Specific Language (DSL)?
+
+A Domain Specific Language (DSL) is a specialized programming language designed to solve problems in a particular domain rather than serving as a general-purpose solution. Unlike general-purpose languages like Python or JavaScript, DSLs are tailored to express concepts and operations that are natural and idiomatic for a specific domain. Just like a traditional programming language, a DSL consists of syntax (the structure of the language) and semantics (the meaning of the constructs). What makes a DSL truly useful is a robust implementation - a parser, compiler, or interpreter that executes its constructs.
+
+<figure style="margin:2em 0;">
+  <img src="/assets/images/dsl.png"
+       alt="Syntax, Semantics, and Implementation of a DSL."
+       style="display:block; width:100%; max-width:600px;">
+
+  <figcaption style="font-size:0.9em; color:#666; margin-top:0.4em;">
+    Figure: Syntax, Semantics, and Implementation of a DSL.
+  </figcaption>
+</figure>
+
+### What does this have to do with Software Compliance Testing? 
+
+Software compliance testing is, at its core, a policy abstraction problem. 
+
+Across nearly all compliance scenarios in software, the same fundamental structure appears:
+
+- A set of requirements
+(standards, controls, policies, RFCs, internal rules)
+- A set of software artifacts that reflect observed or declared behavior
+(certificates, configurations, source code, SBOMs, runtime state)
+- A decision: compliant or not — and, critically, **why**
+
+The primary challenge is not evaluating values or running checks.
+It is making policy explicit. Traditionally, compliance requirements are embedded implicitly inside software through:
+
+- if statements
+- ad-hoc validation logic
+- hard-coded assumptions
+- duplicated rules scattered across tools and services
+
+This approach tightly couples policy to implementation. As a result, requirements become difficult to change, hard to audit, and nearly impossible to explain without inspecting the code that enforces them. 
+
+The key step is to treat policy as **data** - as an explicit, declarative description of what "acceptable" means, independent of how that acceptability is enforced. 
+
+Once policy is made explicit, a domain-specific language becomes the natural execution model. The DSL does not invent policy; it **operationalizes** it, allowing machines to interpret, evaluate, and report on compliance in a deterministic and explainable way. 
+
+This model applies to any software compliance problem where:
+
+- system behavior can be observed or derived as artifacts, and
+- requirements can be expressed as deterministic rules over those artifacts.
+
+In practice, this means that **any deterministic aspect of software behavior fits this model cleanly**.
+
+### Software Compliance Testing Model
+
+In this framing, compliance testing is understood as program execution rather than ad-hoc validation.
+
+- **Policy** is the input.
+It defines constraints over what is considered acceptable.
+- **Artifacts** are observations of behavior.
+In many systems, artifacts must first be derived from runtime behavior before they can be evaluated.
+They represent what the system actually does or declares, captured as structured evidence.
+- The **compliance engine** acts as an interpreter.
+It evaluates policies against artifacts according to well-defined semantics.
+- **Compliance** is the result of execution, together with traceable evidence.
+The outcome is not just a boolean decision, but an explanation of why that decision was reached.
+
+This separation allows policy, observation, and evaluation to evolve independently, while remaining tightly coupled through explicit semantics.
+
+<figure style="margin:2em 0;">
+  <img src="/assets/images/compliance-testing.png"
+       alt="Software Compliance Testing Model"
+       style="display:block; width:100%; max-width:600px;">
+
+  <figcaption style="font-size:0.9em; color:#666; margin-top:0.4em;">
+    Figure: Software Compliance Testing Model.
+  </figcaption>
+</figure>
+
+### Example: Certificate Compliance as a Policy DSL
+
+To make this concrete, consider X.509 certificate compliance.
+
+Certificates are deterministic artifacts: their structure and fields are well-defined, and their validity can be evaluated purely from their contents. At the same time, certificate requirements are typically described in prose (RFCs, internal policies) and implemented directly in code.
+
+I wanted to create a flexible way to express certificate compliance requirements as data, separate from the code that evaluates them and as a consequence, a domain-specific language emerged naturally without the intention to create one.
+
+To illustrate, here is an example policy expressed in YAML that captures a subset of RFC 5280 requirements for X.509 certificates:
+
+```yaml
+id: rfc5280
+rules:
+  - id: version-v3
+    target: certificate.version
+    operator: eq
+    operands: [3]
+    severity: error
+
+  - id: signature-algorithm-secure
+    target: certificate.signatureAlgorithm.algorithm
+    operator: in
+    operands:
+      - SHA256-RSA
+      - SHA384-RSA
+      - ECDSA-SHA256
+    severity: error
+
+  - id: rsa-key-size-minimum
+    when:
+      target: certificate.subjectPublicKeyInfo.algorithm
+      operator: eq
+      operands: [RSA]
+    target: certificate.subjectPublicKeyInfo.publicKey.keySize
+    operator: gte
+    operands: [2048]
+    severity: error
+
+  - id: ca-basic-constraints
+    target: certificate.basicConstraints.cA
+    operator: eq
+    operands: [true]
+    severity: error
+    appliesTo: [root, intermediate]
+
+  - id: key-usage-leaf
+    reference: RFC5280 4.2.1.3
+    target: certificate.keyUsage
+    operator: keyUsageLeaf
+    severity: error
+```
+
+In this model, **policy defines explicit constraints over certificate artifacts** - for example, that a certificate must use version 3 or that an RSA key must be at least 2048 bits long.
+
+The certificate itself is treated purely as an **artifact**: an observed and immutable representation of system behavior. It is not coupled to any specific policy and carries no inherent notion of compliance.
+
+A dedicated **compliance engine** interprets the policy against the artifact by:
+
+- resolving certificate fields,
+- applying domain-specific operators,
+- evaluating conditional rules,
+- and collecting the results of each evaluation.
+
+The outcome of this process is a structured evaluation report. Rather than producing a simple pass or fail result, the report captures:
+
+- which rules were evaluated,
+- which values were observed,
+- which constraints passed or failed,
+- and which standards or references were involved.
+
+Crucially, policy remains independent of how certificates are parsed, collected, or stored. The same engine can evaluate multiple policy sets, apply different compliance profiles, or re-run evaluations over previously captured artifacts for auditing and traceability purposes.
+
+What began as a flexible approach to certificate validation naturally evolved into a domain-specific language - not by deliberate language design, but as a direct consequence of separating policy from implementation and making compliance explicit and executable.
+
+If you want to know more about this project and lint some certificates yourself, check out the [PCL GitHub repository](https://github.com/cavoq/PCL).
+
+### Conclusion
+
+Scalable software compliance starts with a simple shift in perspective.
+
+When system behavior is represented as **artifacts**, and policies are expressed as **explicit constraints** over those artifacts, compliance becomes something that can be interpreted rather than hard-coded. Domain-specific languages provide the missing link: a way to make policy executable without embedding it directly into implementation logic.
+
+The result is a model that scales naturally. Artifacts can be generated independently, policies can evolve over time, and evaluations can be repeated, audited, and explained. Instead of adding more checks, we add clarity.
+
+Once compliance is treated as **data plus interpretation**, the complexity doesn’t disappear - but it becomes manageable.
