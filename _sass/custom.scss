@@ -204,6 +204,15 @@ a {
       margin-bottom: 1.4em;
     }
 
+    .katex-display {
+      margin: 1.4em 0;
+      text-align: left;
+    }
+
+    .katex-display > .katex {
+      text-align: left;
+    }
+
     ul, ol {
       margin-bottom: 1.4em;
       padding-left: 1.5em;
