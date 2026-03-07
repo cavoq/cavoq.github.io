@@ -5,15 +5,15 @@ date: 2025-12-14 01:41:07 +0100
 categories: privacy
 ---
 
-### EU Proposal: Chat Control
+### EU proposal: Chat Control
 
-The EU’s Child Sexual Abuse Regulation - commonly referred to as “Chat Control” - is a legislative [proposal first introduced by the European Commission in May 2022](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=COM%3A2022%3A209%3AFIN) to prevent and combat online child sexual abuse across the EU. It aims to establish EU‑wide rules requiring digital service providers to detect, report, remove, and block child sexual abuse material (CSAM) and to prevent the solicitation of minors on their platforms.
+The EU’s Child Sexual Abuse Regulation – commonly referred to as “Chat Control” – is a legislative [proposal first introduced by the European Commission in May 2022](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=COM%3A2022%3A209%3AFIN) to prevent and combat online child sexual abuse across the EU. It aims to establish EU‑wide rules requiring digital service providers to detect, report, remove, and block child sexual abuse material (CSAM) and to prevent the solicitation of minors on their platforms.
 
 Originally, the proposal included mandatory scanning of user communications, which raised serious privacy and encryption concerns. However, in late October 2025, this mandatory scanning requirement was effectively removed, shifting obligations toward voluntary detection and risk-based measures.
 
 On 26 November 2025, the Council of the EU [endorsed its negotiating position](https://www.consilium.europa.eu/en/press/press-releases/2025/11/26/child-sexual-abuse-council-reaches-position-on-law-protecting-children-from-online-abuse/), reflecting this compromise and formally setting the stage for trilogue negotiations with the European Parliament, scheduled to begin in January 2026. These negotiations will determine the final text of the regulation and the obligations for digital service providers.
 
-### The Reality: Green Light for Mass Surveillance
+### The reality: green light for mass surveillance
 
 If this regulation is adopted, it would effectively greenlight mass surveillance of private communications across the EU, undermining end-to-end encryption and user privacy.
 

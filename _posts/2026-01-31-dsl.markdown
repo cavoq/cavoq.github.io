@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "Domain Specific Languages (DSLs) for Software Compliance Testing"
+title: "Domain-Specific Languages (DSLs) for Software Compliance Testing"
 date: 2026-01-31 01:41:07 +0100
 categories: [software-compliance-testing]
 ---
 
-### What is a Domain Specific Language (DSL)?
+### What is a domain-specific language (DSL)?
 
-A Domain Specific Language (DSL) is a specialized programming language designed to solve problems in a particular domain rather than serving as a general-purpose solution. Unlike general-purpose languages like Python or JavaScript, DSLs are tailored to express concepts and operations that are natural and idiomatic for a specific domain. Just like a traditional programming language, a DSL consists of syntax (the structure of the language) and semantics (the meaning of the constructs). What makes a DSL truly useful is a robust implementation - a parser, compiler, or interpreter that executes its constructs.
+A Domain-Specific Language (DSL) is a specialized programming language designed to solve problems in a particular domain rather than serving as a general-purpose solution. Unlike general-purpose languages like Python or JavaScript, DSLs are tailored to express concepts and operations that are natural and idiomatic for a specific domain. Just like a traditional programming language, a DSL consists of syntax (the structure of the language) and semantics (the meaning of the constructs). What makes a DSL truly useful is a robust implementation – a parser, compiler, or interpreter that executes its constructs.
 
 <figure style="margin:2em 0;">
   <img src="/assets/images/dsl.png"
@@ -19,7 +19,7 @@ A Domain Specific Language (DSL) is a specialized programming language designed 
   </figcaption>
 </figure>
 
-### What does this have to do with Software Compliance Testing? 
+### What does this have to do with software compliance testing?
 
 Software compliance testing is, at its core, a policy abstraction problem. 
 
@@ -41,7 +41,7 @@ It is making policy explicit. Traditionally, compliance requirements are embedde
 
 This approach tightly couples policy to implementation. As a result, requirements become difficult to change, hard to audit, and nearly impossible to explain without inspecting the code that enforces them. 
 
-The key step is to treat policy as **data** - as an explicit, declarative description of what "acceptable" means, independent of how that acceptability is enforced. 
+The key step is to treat policy as **data** – as an explicit, declarative description of what "acceptable" means, independent of how that acceptability is enforced. 
 
 Once policy is made explicit, a domain-specific language becomes the natural execution model. The DSL does not invent policy; it **operationalizes** it, allowing machines to interpret, evaluate, and report on compliance in a deterministic and explainable way. 
 
@@ -52,7 +52,7 @@ This model applies to any software compliance problem where:
 
 In practice, this means that **any deterministic aspect of software behavior fits this model cleanly**.
 
-### Software Compliance Testing Model
+### Software compliance testing model
 
 In this framing, compliance testing is understood as program execution rather than ad-hoc validation.
 
@@ -78,7 +78,7 @@ This separation allows policy, observation, and evaluation to evolve independent
   </figcaption>
 </figure>
 
-### Example: Certificate Compliance as a Policy DSL
+### Example: certificate compliance as a policy DSL
 
 To make this concrete, consider X.509 certificate compliance.
 
@@ -130,7 +130,7 @@ rules:
     severity: error
 ```
 
-In this model, **policy defines explicit constraints over certificate artifacts** - for example, that a certificate must use version 3 or that an RSA key must be at least 2048 bits long.
+In this model, **policy defines explicit constraints over certificate artifacts** – for example, that a certificate must use version 3 or that an RSA key must be at least 2048 bits long.
 
 The certificate itself is treated purely as an **artifact**: an observed and immutable representation of system behavior. It is not coupled to any specific policy and carries no inherent notion of compliance.
 
@@ -150,7 +150,7 @@ The outcome of this process is a structured evaluation report. Rather than produ
 
 Crucially, policy remains independent of how certificates are parsed, collected, or stored. The same engine can evaluate multiple policy sets, apply different compliance profiles, or re-run evaluations over previously captured artifacts for auditing and traceability purposes.
 
-What began as a flexible approach to certificate validation naturally evolved into a domain-specific language - not by deliberate language design, but as a direct consequence of separating policy from implementation and making compliance explicit and executable.
+What began as a flexible approach to certificate validation naturally evolved into a domain-specific language – not by deliberate language design, but as a direct consequence of separating policy from implementation and making compliance explicit and executable.
 
 If you want to know more about this project and lint some certificates yourself, check out the [PCL GitHub repository](https://github.com/cavoq/PCL).
 
@@ -162,4 +162,4 @@ When system behavior is represented as **artifacts**, and policies are expressed
 
 The result is a model that scales naturally. Artifacts can be generated independently, policies can evolve over time, and evaluations can be repeated, audited, and explained. Instead of adding more checks, we add clarity.
 
-Once compliance is treated as **data plus interpretation**, the complexity doesn’t disappear - but it becomes manageable.
+Once compliance is treated as **data plus interpretation**, the complexity doesn’t disappear – but it becomes manageable.

@@ -2,7 +2,7 @@
 layout: post
 title: "Our Objective Functions Are Flawed"
 date: 2026-03-07 01:41:07 +0100
-categories: systems thinking
+categories: [systems-thinking]
 ---
 
 ### When the metric becomes the goal

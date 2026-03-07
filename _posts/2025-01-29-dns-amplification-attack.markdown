@@ -5,7 +5,7 @@ date:   2025-01-29 01:41:07 +0100
 categories: cybersecurity
 ---
 
-### What is a DNS Amplification Attack?
+### What is a DNS amplification attack?
 
 Denial of Service (DoS) attacks are a common threat to online services, and typically require a large number of requests to overwhelm a target server. A DNS Amplification Attack is a specific type of DoS attack that takes advantage of the Domain Name System (DNS) to amplify the volume of traffic directed at a target server.
 
@@ -47,7 +47,7 @@ Here is an example of a function that sends a DNS query to a target server using
     }
 ```
 
-### How to Protect Against DNS Amplification Attacks?
+### How to protect against DNS amplification attacks?
 
 Since attackers can use open DNS resolvers to amplify their attacks, it is essential to secure your DNS infrastructure to prevent DNS Amplification Attacks. Here are some best practices to protect against DNS Amplification Attacks:
 

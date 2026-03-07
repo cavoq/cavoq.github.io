@@ -5,7 +5,7 @@ date: 2026-01-19 01:41:07 +0100
 categories: cybersecurity
 ---
 
-### CIA Triad: Confidentiality, Integrity, Availability
+### CIA triad: confidentiality, integrity, availability
 
 When we talk about cybersecurity, we often hear about the “CIA Triad” — Confidentiality, Integrity, and Availability. These three principles form the foundation of information security and are essential to understanding cybersecurity. In essence, cybersecurity is about protecting data in all its forms, ensuring that it remains confidential, unaltered, and accessible when needed.
 
@@ -21,7 +21,7 @@ From the perspective of a malicious actor, this framing becomes clearer. Without
   </figcaption>
 </figure>
 
-### Systems, Boundaries, and Attack Surfaces
+### Systems, boundaries, and attack surfaces
 
 In practice, cybersecurity evaluates enclosed systems rather than individuals. Institutions can be modeled as bounded entities containing internal state (data), separated from an external environment by a boundary. The attack surface of such a system is the set of points at which data crosses that boundary. Every cyber attack corresponds to an unauthorized extraction, injection, modification, or disruption of data flow across it. This framing allows confidentiality, integrity, and availability to be treated as constraints on boundary-crossing functions rather than as vague properties of systems.
  
@@ -35,7 +35,7 @@ In practice, cybersecurity evaluates enclosed systems rather than individuals. I
   </figcaption>
 </figure>
 
-### Humans as Interfaces Within Systems
+### Humans as interfaces within systems
 
 This abstraction also applies to humans within the system. From a security perspective, people function as interfaces that receive, process, and transmit information across the system boundary. This is not a claim about their value or agency, but about the role they occupy in information flow. Unlike software interfaces, human interfaces enforce rules probabilistically rather than deterministically, which is precisely why they constitute a significant portion of the attack surface.
 
