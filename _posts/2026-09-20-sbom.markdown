@@ -1,0 +1,123 @@
+---
+layout: post
+title: "Software Bills of Materials: What They Can and Cannot Tell You"
+date: 2026-09-20 01:41:07 +0200
+categories: [cybersecurity, sbom]
+---
+
+When a serious vulnerability is disclosed, one of the first questions is deceptively simple: *Do we use the affected software?* A Software Bill of Materials (SBOM) is meant to help answer it. It records the components used to build a software product and the relationships between them – an ingredient list for software.
+
+That inventory can transform an incident response. Instead of asking every development team to search manually for a library, an organization can query its SBOMs and identify potentially affected products. It can also use the same data to manage licenses, monitor dependencies, and understand its exposure to suppliers. The National Telecommunications and Information Administration therefore describes an SBOM as a foundational data layer for software transparency and security [1].
+
+But an SBOM has limits. Finding a vulnerable package does not establish that the vulnerable code is present, loaded, reachable, or exploitable. Even the initial inventory may change depending on which tool generated it and which project files that tool examined.
+
+Four recent empirical studies make this distinction unusually clear [3–6]. Together, they suggest that an SBOM is best understood as the first layer in a chain of evidence, rather than a complete statement about software risk.
+
+### One name, several inventories
+
+The term "SBOM" can hide an important question: an inventory of *what* and *when*?
+
+A source SBOM can describe dependencies declared in manifests and lockfiles. A build-time SBOM can record the components that contributed to a release. A post-build scan can inspect the resulting package, container, or executable. A runtime inventory can observe what a process has actually loaded. These views overlap, but they are not interchangeable. CISA's 2025 minimum-elements guidance recognizes this by including the SBOM's generation context – before, during, or after the build – as information that consumers need [2].
+
+The distinction matters because software changes as it moves through its lifecycle. A development dependency may never ship in the final product, yet it can still compromise a build pipeline. An optional plugin may be absent during a source scan but loaded in production. A package installed in an image may never be used by a particular process. Each inventory answers a different security question.
+
+| Evidence layer | Question it answers | Typical source |
+|---|---|---|
+| Declared | What does the project say it depends on? | Manifests and lockfiles |
+| Built or deployed | What entered the artifact or environment? | Build records, packages, images, filesystems |
+| Loaded | What is resident in the running process? | Runtime telemetry or memory analysis |
+| Reachable | Can application code invoke the vulnerable function? | Call-graph analysis |
+| Exposed | Can attacker-controlled input reach that function? | Data-flow and taint analysis |
+
+Evidence at one layer does not prove the next. It does, however, narrow the next question.
+
+### The same project can produce different SBOMs
+
+Prado and colleagues compared Syft, Trivy, and cdxgen across more than 3,000 JavaScript and Rust projects [3]. Their reference inventory came from dependency lockfiles and deliberately included development, build, and test dependencies. With all lockfiles available, average JavaScript coverage ranged from 32.71% for Trivy and 43.78% for Syft to 98.72% for cdxgen. On Rust, the same tools reached 83.85%, 100%, and 99.34%, respectively.
+
+Those figures are not a universal ranking of the tools. Much of the difference arose from scope and design choices. Some tools excluded development dependencies, interpreted only certain lockfiles, or skipped particular directories. The results changed by ecosystem. The broader lesson is that "completeness" is meaningless until the intended scope is defined.
+
+The study also found representation differences. Tools could assign different names or versions to the same underlying dependency, for example because of package aliases, peer-dependency suffixes, or Git-based version identifiers. This is more than cosmetic: vulnerability services commonly use package identifiers and exact versions to correlate components with advisories. Two inventories can appear plausible while producing different vulnerability results.
+
+Standards such as SPDX and CycloneDX define how components and relationships can be represented, but they do not settle every question about which components should be included or how discovery decisions should be recorded. The authors therefore argue for standardized scope and provenance attributes, as well as a canonical way to represent the root component and dependency graph [3].
+
+### More metadata does not necessarily mean more accuracy
+
+A larger study by Bhuiyan and colleagues examined GitHub-generated SBOMs from 10,000 repositories across ten programming-language ecosystems and compared them with Syft, Trivy, and Microsoft's SBOM Tool [4]. It found that the availability of versions and licenses varied sharply by language.
+
+The most revealing part of the study was a separate accuracy evaluation of 600 repositories in Python, Java, and JavaScript. The researchers constructed reference dependency sets using each ecosystem's native tooling: installed Python environments, Maven dependency resolution, and JavaScript lockfiles.
+
+GitHub's component-detection F1 score was 29.0% for Python and 35.9% for Java, compared with 47.9% and 84.6% for Microsoft's tool. In JavaScript, GitHub led with an F1 score of 85.3%, compared with Microsoft's 81.1%. Version accuracy followed the same ecosystem-dependent pattern: GitHub achieved 21.6% in Python but 90.4% in JavaScript.
+
+These results show why counting fields or components is insufficient. A tool can populate a version field with a range, an unresolved value, or a version that differs from the installed package. It can also report many components that do not match the resolved environment. Conversely, an omitted component creates a blind spot. An SBOM must be checked for correctness, not merely for syntactic validity or the presence of required fields.
+
+Exact versions are particularly important. A versionless package identifier can return advisories for every vulnerable release of a package, even when the deployed version is unaffected. This increases noise and makes it harder to distinguish urgent findings from irrelevant ones [4].
+
+### Presence is not exploitability
+
+Once an SBOM identifies a vulnerable package, vulnerability management often treats that match as the conclusion. Grgic, Maksimovic, and Laskov argue that it should instead be the beginning of a propagation analysis [5]. They describe four stages:
+
+1. The vulnerable component is present as a direct or transitive dependency.
+2. The vulnerable class or code is physically present.
+3. The vulnerable method is reachable from the application.
+4. Attacker-controlled input can flow to the vulnerable operation.
+
+The researchers tested this model on three Java projects affected by vulnerable Log4j versions. Syft, Trivy, Grype, and cdxgen were useful for component discovery and CVE matching, although their results depended on the analyzed input. Ordinary SBOM output did not establish method-level reachability or a path from untrusted input to a logging operation. Those questions required program-analysis tools such as CodeQL and Semgrep.
+
+This does not make the SBOM finding a false alarm. A vulnerable component is still valuable evidence and may need to be upgraded regardless of observed reachability. Rather, the additional analysis helps distinguish exposure from demonstrated exploitability and helps teams prioritize limited remediation capacity.
+
+The distinction also works in the other direction. Failure to find a call path is not proof of safety. Reflection, dynamic dispatch, configuration, incomplete source coverage, and workloads not represented in the analysis can all hide relevant behavior. Reachability should raise or lower confidence, not become an excuse to ignore vulnerable software.
+
+### Runtime evidence adds another view
+
+Ali, Case, and Ahmed explore this problem from memory forensics [6]. Their MEM-SBOM prototype reconstructs Python modules, packages, versions, dependencies, and function relationships from the memory of a running application. The motivation is straightforward: static metadata can miss dynamically imported modules, plugins, generated namespaces, and the exact code resident in a process.
+
+Across 51 Python applications, the prototype achieved 100% package coverage against the study's aligned runtime reference and 99.32% version accuracy. Conventional tools missed some runtime-only packages or produced less complete dependency graphs in the tested configurations.
+
+The vulnerability case study is especially illustrative. Package-level matching flagged six applications that depended on Tornado. Reconstructed call paths reached a vulnerable function in only one of them, Streamlit. In that particular case, reachability analysis removed five of six package-level alerts from the immediate priority set.
+
+That result needs careful interpretation. It is a six-application case study, not evidence that runtime analysis will eliminate 83.3% of alerts in general. A module loaded in memory has not necessarily executed, and a reachable function is not necessarily exploitable. The analysis reflects a particular snapshot and workload. It also excluded native C and C++ extensions, could not observe installation-only attacks, relied on known vulnerability databases, and assumed that the Python interpreter itself was trustworthy [6].
+
+Runtime evidence therefore complements an SBOM rather than replacing it. A broad build inventory helps identify supply-chain exposure; runtime and reachability evidence help determine where that exposure is active and urgent.
+
+### From document production to evidence management
+
+These studies point toward a practical way to use SBOMs.
+
+First, define the purpose and lifecycle stage of every inventory. A development SBOM, release SBOM, and runtime inventory should be labeled as different artifacts. Their apparent disagreements may describe real differences between environments.
+
+Second, generate SBOMs from resolved dependencies and released artifacts wherever possible. Lockfiles, package-manager resolution, and artifact inspection provide stronger evidence than unpinned manifests alone. Where multiple ecosystems or package managers are involved, validate the generator against each of them rather than assuming uniform behavior.
+
+Third, preserve scope and provenance. Consumers should be able to tell whether a component is used for development, testing, building, or production, and whether it was declared, resolved, inferred from a filename, or observed in an artifact. Silent filtering makes an SBOM difficult to interpret and audit.
+
+Fourth, validate the fields that drive decisions. Component names, package identifiers, exact versions, dependency edges, and licenses deserve targeted checks. Producing a standards-compliant JSON document is not the same as producing a correct inventory.
+
+Finally, connect SBOM data to vulnerability, reachability, data-flow, and runtime analysis. A useful workflow moves from broad discovery to progressively stronger evidence:
+
+> component present → vulnerable code present → code reachable → attacker input reaches it
+
+Not every vulnerability investigation will need all four steps. A widely exposed internet service and a dormant internal tool justify different levels of analysis. The model nevertheless prevents a package-to-CVE match from being mistaken for a complete risk assessment.
+
+### Conclusion
+
+SBOMs solve an important problem: they make otherwise hidden software dependencies visible and machine-readable. That foundation can accelerate incident response, improve supplier conversations, and support vulnerability and license management.
+
+The evidence from these four studies also shows what an SBOM cannot do alone. Its contents depend on the generator, ecosystem, available metadata, configuration, and moment in the software lifecycle. Component presence does not establish execution, reachability, or exploitability.
+
+The useful question is therefore not simply, "Do we have an SBOM?" It is: "What state of the software does this SBOM describe, how accurate is it, and what additional evidence do we need for this decision?"
+
+The goal is a defensible chain of evidence – what was declared, what was built, what was deployed, what was loaded, and what an attacker can reach. The SBOM is where that chain begins.
+
+### References
+
+[1] National Telecommunications and Information Administration, ["The Minimum Elements for a Software Bill of Materials (SBOM)"](https://www.ntia.gov/report/2021/minimum-elements-software-bill-materials-sbom), 12 July 2021.
+
+[2] Cybersecurity and Infrastructure Security Agency, ["Minimum Elements for a Software Bill of Materials (SBOM)"](https://www.cisa.gov/sites/default/files/2025-08/2025_CISA_SBOM_Minimum_Elements.pdf), 2025.
+
+[3] Alan Prado, Olivier Zendra, Philippe Boinot, and Olivier Barais, ["Mind the Gap: How SBOM Specification Ambiguities Lead to Divergent Software Bills of Materials. An Empirical Tool Study"](https://arxiv.org/abs/2609.19920), 2026.
+
+[4] Kawsar Ahmed Bhuiyan, Mohamed Bilel Besbes, Rachna Raj, Adam Al Assil, and Diego Elias Costa, ["Beyond Compliance: A Large Scale Study on the Completeness and Consistency of the GitHub SBOMs"](https://arxiv.org/abs/2607.04614), 2026.
+
+[5] Ljubica Grgic, Lazar Maksimovic, and Pavel Laskov, ["Propagation Model for SSC Attacks: Why SBOM (Tools) Don't Tell the Whole Truth"](https://arxiv.org/abs/2609.05380), 2026.
+
+[6] Hala Ali, Andrew Case, and Irfan Ahmed, ["What You See Is Not What You Execute: Memory-Based Runtime SBOM Generation for Supply Chain Security"](https://arxiv.org/abs/2606.22827), 2026.

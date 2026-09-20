@@ -7,9 +7,9 @@ categories: essays
 
 ### Childhood: unconscious allocation
 
-Think back on your childhood. Personally, I haven't thought about time, energy and attention back then. The only time I thought about these things was when I was tired, hungry or worried that I might come back home too late. But I never thought about these things as scarce resources. I lived in the moment, yet these constraints were always there, for all of us. We just didn't have the awareness to recognize them as such, but we all had experiences that were shaped by these limitations. 
+Think back on your childhood. Personally, I haven't thought about time, energy and attention back then. The only time I thought about these things was when I was tired, hungry or worried that I might come back home too late. But I never thought about these things as scarce resources. I lived in the moment, yet these constraints were always there, for all of us. We just didn't have the awareness to recognize them as such, but we all had experiences that were shaped by these limitations.
 
-We all stayed up too late playing games and feeling tired the next day. We all had to wait for our parents to come home before we could go out and play. We intuitively recognized our limits and adapted our behavior accordingly as we got older. And we all learned the consequences of ignoring these constraints – sometimes even choosing to ignore them because the immediate reward was worth it. 
+We all stayed up too late playing games and feeling tired the next day. We all had to wait for our parents to come home before we could go out and play. We intuitively recognized our limits and adapted our behavior accordingly as we got older. And we all learned the consequences of ignoring these constraints – sometimes even choosing to ignore them because the immediate reward was worth it.
 
 All we really did is manage our resources in a way that felt natural to us, without consciously thinking about it. We made intuitive decisions on how to allocate our time, energy and attention based on our needs and desires. So for the purpose of this essay, I choose to define a resource as the following:
 
@@ -27,7 +27,7 @@ What we eventually discovered is simple but unsettling: **our resources are fini
 
 ### Adulthood: deliberate allocation
 
-Everyone has their own timeline for when they become aware of the scarcity of their resources. But we inevitably become aware that our time, energy, and attention are not expanding – they are narrowing. The older we get, the more visible the limits become. And with that visibility, choosing how to allocate our resources becomes more and more important. We all have to make trade-offs and prioritize what matters most to us. 
+Everyone has their own timeline for when they become aware of the scarcity of their resources. But we inevitably become aware that our time, energy, and attention are not expanding – they are narrowing. The older we get, the more visible the limits become. And with that visibility, choosing how to allocate our resources becomes more and more important. We all have to make trade-offs and prioritize what matters most to us.
 
 We begin to understand that life is not just about reacting to consequences. It is about deliberate allocation. Every choice becomes a trade-off. Every commitment becomes a filter. Every direction excludes another.
 
@@ -47,7 +47,7 @@ Because once you understand that everything is allocation, you understand that y
 
 ### Meaning: scarcity is what makes choice matter
 
-Have you ever played a game where you have to manage resources like currencies, had to wait for something to build and decided to give yourself unlimited currency or skip the waiting time? You might have felt a momentary thrill, but it probably didn’t last. 
+Have you ever played a game where you have to manage resources like currencies, had to wait for something to build and decided to give yourself unlimited currency or skip the waiting time? You might have felt a momentary thrill, but it probably didn’t last.
 
 The game lost its meaning because the scarcity that made your choices matter was removed. The challenge, the tension, the growth – all of it was gone. The game became hollow because the resources that gave it meaning were no longer scarce.
 
@@ -55,10 +55,10 @@ The same principle applies to life. If we could just buy more time, energy, or a
 
 ### Conclusion: embrace scarcity, choose wisely
 
-Embrace the scarcity of your resources, because it is what makes your choices matter. Be aware that in today’s world, your attention, your time, and your energy are constantly competing for capture. There are countless forces designed to fragment them. 
+Embrace the scarcity of your resources, because it is what makes your choices matter. Be aware that in today’s world, your attention, your time, and your energy are constantly competing for capture. There are countless forces designed to fragment them.
 
-But within your limits lies your **agency**. 
+But within your limits lies your **agency**.
 
-You cannot expand time. You cannot eliminate trade-offs. You cannot avoid scarcity. But you can decide what deserves your allocation. 
+You cannot expand time. You cannot eliminate trade-offs. You cannot avoid scarcity. But you can decide what deserves your allocation.
 
 And that decision – repeated quietly, daily – is what becomes your life.
